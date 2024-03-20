@@ -1,84 +1,46 @@
-using System;
-using System.Collections;
-using UnityEngine;
+using Enums;
 
-// 알바생 능력치
-public class EmployeeStatus
+public class Employee
 {
-    public int Counter { get; set; }
-    public int Make { get; set; }
-    public int Clean { get; set; }
-}
+    public Character Character { get; private set; }
+    public Rank Rank { get; private set; }
+    public Level Level { get; private set; }
+    public Limit Limit { get; private set; }
+    public float Proficiency { get; private set; }
+    public float EXP { get; private set; }
 
-// 알바생의 정보들
-public class EmployeeModel
-{
-    public string Name { get; set; }
-    public EmployeeStatus EmployeeStatus { get; set; } = new EmployeeStatus();
-    // 월화수목금토일 오픈팀 오후팀 마감팀
-    public (bool open, bool afternoon, bool close)[] IsWorkTime { get; set; } = new (bool open, bool afternoon, bool close)[7];
-}
-
-public class Employee : MonoBehaviour
-{
-    // 정보들은 나중에 세이브 파일에서 가져오기 용이하도록 분리해 두었다.
-    private EmployeeModel model = new EmployeeModel();
-
-    // 일하고 있나요?
-    public bool IsWorking { get => isWorking; }
-    private bool isWorking;
-
-    private void Awake()
+    public void SetEmployee(Character character)
     {
-        
+        Character = character;
+        Rank = Rank.employee;
+        Level = Level.newcomer;
+        Limit = Limit.none;
+        Proficiency = 0;
+        EXP = 0;
     }
 
-    private void Start()
+    public void SetEXP(float exp)
     {
-        Initialize();
+        EXP = exp;
     }
 
-    public void Initialize()
+    public void SetLevel(Level level)
     {
-        // test
-        model.EmployeeStatus.Counter = 5;
-        model.EmployeeStatus.Make = 5;
-        model.EmployeeStatus.Clean = 5;
-
-        for (int i = 0; i < model.IsWorkTime.Length; i++)
-        {
-            model.IsWorkTime[i].open = true;
-            model.IsWorkTime[i].afternoon = true;
-            model.IsWorkTime[i].close = true;
-        }
+        Level = level;
     }
 
-    public void StartWorkingCounter(Action onEndWorking)
+    public void SetRank(Rank rank)
     {
-        Debug.Log("오더 시작");
-        StartCoroutine(Working(onEndWorking, 10 / model.EmployeeStatus.Counter));
+        Rank = rank;
     }
 
-    public void StartWorkingMake(int makingTime, Action onEndWorking)
+    public void SetLimit(Limit limit)
     {
-        Debug.Log("제조 시작");
-        StartCoroutine(Working(onEndWorking, makingTime * 10 / model.EmployeeStatus.Make));
+        Limit = limit;
     }
 
-    public void StartWorkingClean(Action onEndWorking)
+    public void SetProficiency(float proficiency)
     {
-        StartCoroutine(Working(onEndWorking, 10 / model.EmployeeStatus.Clean));
-    }
-
-    // 일 시키는 코루틴.
-    // 속도는 능력치에 비례한다.
-    // 처리가 끝나면 콜백함수 실행
-    private IEnumerator Working(Action onEndWorking, float duringTime)
-    {
-        isWorking = true;
-        yield return new WaitForSeconds(duringTime);
-        isWorking = false;
-
-        onEndWorking.Invoke();
+        Proficiency = proficiency;
     }
 }
