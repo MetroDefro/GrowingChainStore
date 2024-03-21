@@ -1,47 +1,44 @@
-namespace Enums
+public enum Grade
 {
-    public enum Grade
-    {
-        none,
+    none,
 
-        star1,
-        star2,
-        star3,
-        star4,
-        star5,
-        star6,
-    }
+    star1,
+    star2,
+    star3,
+    star4,
+    star5,
+    star6,
+}
 
-    public enum Level
-    {
-        none,
+public enum Level
+{
+    none,
 
-        newcomer,
-        beginner,
-        faithful,
-        expert,
-        excellent,
-        elite,
-        master,
-    }
+    newcomer,
+    beginner,
+    faithful,
+    expert,
+    excellent,
+    elite,
+    master,
+}
 
-    public enum Rank
-    {
-        none,
+public enum Rank
+{
+    none,
 
-        employee,
-        manager,
-        owner,
-    }
+    employee,
+    manager,
+    owner,
+}
 
-    public enum Limit
-    {
-        none,
+public enum Limit
+{
+    none,
 
-        limit1,
-        limit2,
-        limit3,
-        limit4,
-        limit5,
-    }
+    limit1,
+    limit2,
+    limit3,
+    limit4,
+    limit5,
 }

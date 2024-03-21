@@ -1,5 +1,4 @@
 using UnityEngine;
-using Enums;
 
 public class Character : ScriptableObject
 {
