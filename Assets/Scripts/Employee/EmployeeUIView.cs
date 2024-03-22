@@ -9,8 +9,10 @@ namespace Noru.Employee
         #region Property
         public Button BackButton => backButton;
         public RectTransform EmployeeListParent => employeeListParent;
-        public RectTransform ExpGauge => expGauge;
         public Button SalaryButton => salaryButton;
+        public Button SelectedEmployeePanelBackButton => selectedEmployeePanelBackButton;
+
+        public Sprite[] StarSprites => starSprites;
 
         #endregion
 
@@ -36,11 +38,35 @@ namespace Noru.Employee
         [SerializeField] private TextMeshProUGUI descriptionTMP;
         [SerializeField] private RectTransform expGauge;
         [SerializeField] private Button salaryButton;
+        [SerializeField] private Button selectedEmployeePanelBackButton;
+
+        [Header("Others")]
+        [SerializeField] private Sprite[] starSprites;
 
         #endregion
 
         #region public method
+        public void Initialize()
+        {
+            ShowSelectedEmployeePanel(false);
+        }
+
+        public void ShowEmployeeUI(bool isShow) => gameObject.SetActive(isShow);
+
         public void ShowSelectedEmployeePanel(bool isShow) => selectedEmployeePanel.gameObject.SetActive(isShow);
+
+        public void SetSelectedEmployeePanel(Sprite starSprite, Sprite profileSprite, string titleText
+            , string nameText, string limitAdvanceText, string nextEXPText, string descriptionText)
+        {
+            starImage.sprite = starSprite;
+            profileImage.sprite = profileSprite;
+
+            titleTMP.text = titleText;
+            nameTMP.text = nameText;
+            limitAdvanceTMP.text = limitAdvanceText;
+            nextEXPTMP.text = nextEXPText;
+            descriptionTMP.text = descriptionText;
+        }
 
         public void SetStarImage(Sprite sprite) => starImage.sprite = sprite;
         public void SetProfileImage(Sprite sprite) => profileImage.sprite = sprite;

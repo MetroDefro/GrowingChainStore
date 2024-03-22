@@ -1,7 +1,5 @@
 public enum Grade
 {
-    none,
-
     star1,
     star2,
     star3,
@@ -12,8 +10,6 @@ public enum Grade
 
 public enum Level
 {
-    none,
-
     newcomer,
     beginner,
     faithful,
@@ -25,8 +21,6 @@ public enum Level
 
 public enum Rank
 {
-    none,
-
     employee,
     manager,
     owner,
