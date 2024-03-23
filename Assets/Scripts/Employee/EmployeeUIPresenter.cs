@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Noru.Employee
 {
@@ -12,7 +13,7 @@ namespace Noru.Employee
 
         [SerializeField] private EmployeeButton employeeButton;
 
-        private Action<Employee> onClickSararyButton;
+        private Action<Employee, int> onClickSararyButton;
 
         private List<EmployeeButton> employeeButtons;
         #endregion
@@ -26,7 +27,7 @@ namespace Noru.Employee
         #endregion
 
         #region public Method
-        public void Initialize(List<Employee> employees, Action<Employee> onClickSararyButton)
+        public void Initialize(List<Employee> employees, Action<Employee, int> onClickSararyButton)
         {
             view.Initialize();
 
@@ -62,12 +63,19 @@ namespace Noru.Employee
 
         private void AddSelectedEmployeePanelListeners(Employee employee)
         {
-            view.SalaryButton.onClick.AddListener(() => onClickSararyButton(employee));
+            view.SalaryButton.onClick.AddListener(() => view.ShowSalaryPaymentPanel(true));
             view.SelectedEmployeePanelBackButton.onClick.AddListener(() =>
             {
                 RemoveSelectedEmployeePanelListeners();
                 view.ShowSelectedEmployeePanel(false);
             });
+
+            int mul = 10;
+            foreach(Button button in view.PaymentButtons)
+            {
+                button.onClick.AddListener(() => onClickSararyButton(employee, mul));
+                mul *= 10;
+            }
         }
 
         private void RemoveSelectedEmployeePanelListeners()

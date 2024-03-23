@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using UnityEngine;
 
 public class CSVparser
 {
@@ -74,6 +75,26 @@ public class CSVparser
 
             InCome inCome = new InCome(rank, level, star1, star2, star3, star4, star5, star6);
             result.Add(inCome);
+        }
+
+        return result;
+    }
+
+    public List<Character> ParseCharacterTable(DataTable table)
+    {
+        List<Character> result = new List<Character>();
+
+        foreach (DataRow row in table.Rows)
+        {
+            string name = row["Name"].ToString();
+            Sprite profileSprite = Resources.Load<Sprite>(row["ProfileSprite"].ToString());
+            Sprite standingSprite = Resources.Load<Sprite>(row["StandingSprite"].ToString());
+            Grade grade = (Grade)Enum.Parse(typeof(Grade), row["Grade"].ToString());
+            string description = row["Description"].ToString();
+            int id = int.Parse(row["ID"].ToString());
+
+            Character character = new Character(name, profileSprite, standingSprite, grade, description, id);
+            result.Add(character);
         }
 
         return result;

@@ -215,13 +215,6 @@ MonoBehaviour:
   profileImage: {fileID: 1217409966655439492}
   starImage: {fileID: 7377261310468066708}
   nameTMP: {fileID: 3521627499646122638}
-  starSprites:
-  - {fileID: 21300000, guid: c81ecda749e983149a66fdcbdc7a5244, type: 3}
-  - {fileID: 21300000, guid: 79883e64fce532a4ab0c85ee2ea6448f, type: 3}
-  - {fileID: 21300000, guid: b118df6d39a9eda49b3f2238dd1cfd13, type: 3}
-  - {fileID: 21300000, guid: 883ca0d51689f394cb44dfec4b1e4e89, type: 3}
-  - {fileID: 21300000, guid: d6777ce22a12e8d41acf519ab304e8e0, type: 3}
-  - {fileID: 21300000, guid: 9705da5b4c5701441978fd578672f4a0, type: 3}
 --- !u!1 &4542845142650159609
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,8 +358,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 83876d8131939da4499975eada20cb03, type: 2}
+  m_sharedMaterial: {fileID: 4556413735443612170, guid: 83876d8131939da4499975eada20cb03, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

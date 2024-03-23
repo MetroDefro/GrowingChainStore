@@ -8,10 +8,15 @@ namespace manager
 {
     public class DataManager : MonoBehaviour
     {
+        #region Variable
         public static DataManager instance;
 
         public List<EXP> EXPList;
         public List<InCome> InComeList;
+        public List<Character> CharacterList;
+        #endregion
+
+        #region Life Cycle
 
         private void Awake()
         {
@@ -21,14 +26,65 @@ namespace manager
             DontDestroyOnLoad(gameObject);
         }
 
-        private void Start()
+        #endregion
+
+        #region Public Method
+        public void Initialize()
         {
             CSVparser csvparser = new CSVparser();
             EXPList = csvparser.ParseEXPTable(csvparser.CSVReader(Application.streamingAssetsPath + @"\exp_table.csv"));
             InComeList = csvparser.ParseInComeTable(csvparser.CSVReader(Application.streamingAssetsPath + @"\income_table.csv"));
-
-            // test
-            // Debug.Log(InComeList.Find(o => o.Rank == Rank.manager && o.Level == Level.expert).Star5);
+            CharacterList = csvparser.ParseCharacterTable(csvparser.CSVReader(Application.streamingAssetsPath + @"\character_table.csv"));
         }
+
+        public int FindEXP(Grade grade, Rank rank, Level level)
+        {
+            switch(grade)
+            {
+                case Grade.star1:
+                    return EXPList.Find(o => o.Rank == rank && o.Level == level).Star1;
+                case Grade.star2:
+                    return EXPList.Find(o => o.Rank == rank && o.Level == level).Star2;
+                case Grade.star3:
+                    return EXPList.Find(o => o.Rank == rank && o.Level == level).Star3;
+                case Grade.star4:
+                    return EXPList.Find(o => o.Rank == rank && o.Level == level).Star4;
+                case Grade.star5:
+                    return EXPList.Find(o => o.Rank == rank && o.Level == level).Star5;
+                case Grade.star6:
+                    return EXPList.Find(o => o.Rank == rank && o.Level == level).Star6;
+                default:
+                    return 0;
+            }
+            
+        }
+
+        public float FindInCome(Grade grade, Rank rank, Level level)
+        {
+            switch (grade)
+            {
+                case Grade.star1:
+                    return InComeList.Find(o => o.Rank == rank && o.Level == level).Star1;
+                case Grade.star2:
+                    return InComeList.Find(o => o.Rank == rank && o.Level == level).Star2;
+                case Grade.star3:
+                    return InComeList.Find(o => o.Rank == rank && o.Level == level).Star3;
+                case Grade.star4:
+                    return InComeList.Find(o => o.Rank == rank && o.Level == level).Star4;
+                case Grade.star5:
+                    return InComeList.Find(o => o.Rank == rank && o.Level == level).Star5;
+                case Grade.star6:
+                    return InComeList.Find(o => o.Rank == rank && o.Level == level).Star6;
+                default:
+                    return 0;
+            }
+        }
+
+        public Character FindCharacter(int id) 
+        {
+            return CharacterList.Find(o => o.ID == id);
+        }
+
+        #endregion
     }
 }

@@ -11,6 +11,7 @@ namespace Noru.Employee
         public RectTransform EmployeeListParent => employeeListParent;
         public Button SalaryButton => salaryButton;
         public Button SelectedEmployeePanelBackButton => selectedEmployeePanelBackButton;
+        public Button[] PaymentButtons => paymentButtons;
 
         public Sprite[] StarSprites => starSprites;
 
@@ -40,6 +41,10 @@ namespace Noru.Employee
         [SerializeField] private Button salaryButton;
         [SerializeField] private Button selectedEmployeePanelBackButton;
 
+        [Header("SelectedEmployeePanel-SalaryPaymentPanel")]
+        [SerializeField] private RectTransform salaryPaymentPanel;
+        [SerializeField] private Button[] paymentButtons;
+
         [Header("Others")]
         [SerializeField] private Sprite[] starSprites;
 
@@ -48,12 +53,14 @@ namespace Noru.Employee
         #region public method
         public void Initialize()
         {
+            ShowEmployeeUI(true);
             ShowSelectedEmployeePanel(false);
         }
 
         public void ShowEmployeeUI(bool isShow) => gameObject.SetActive(isShow);
 
         public void ShowSelectedEmployeePanel(bool isShow) => selectedEmployeePanel.gameObject.SetActive(isShow);
+        public void ShowSalaryPaymentPanel(bool isShow) => salaryPaymentPanel.gameObject.SetActive(isShow);
 
         public void SetSelectedEmployeePanel(Sprite starSprite, Sprite profileSprite, string titleText
             , string nameText, string limitAdvanceText, string nextEXPText, string descriptionText)

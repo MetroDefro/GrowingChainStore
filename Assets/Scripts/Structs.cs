@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public struct EXP
 {
     public Rank Rank;
@@ -44,5 +46,25 @@ public struct InCome
         this.Star4 = Star4;
         this.Star5 = Star5;
         this.Star6 = Star6;
+    }
+}
+
+public struct Character
+{
+    public string Name;
+    public Sprite ProfileSprite;
+    public Sprite StandingSprite;
+    public Grade Grade;
+    public string Description;
+    public int ID;
+
+    public Character(string Name, Sprite ProfileSprite, Sprite StandingSprite, Grade Grade, string Description, int ID)
+    {
+        this.Name = Name;
+        this.ProfileSprite = ProfileSprite;
+        this.StandingSprite = StandingSprite;
+        this.Grade = Grade;
+        this.Description = Description;
+        this.ID = ID;
     }
 }
