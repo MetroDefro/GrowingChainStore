@@ -1,3 +1,4 @@
+using manager;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +14,8 @@ namespace Noru.Employee
 
         [SerializeField] private EmployeeButton employeeButton;
 
-        private Action<Employee, int> onClickSararyButton;
+        private Action<Employee> onClickSararyButton;
+        private Action<Employee> onClickRankUpButton;
 
         private List<EmployeeButton> employeeButtons;
         #endregion
@@ -27,11 +29,12 @@ namespace Noru.Employee
         #endregion
 
         #region public Method
-        public void Initialize(List<Employee> employees, Action<Employee, int> onClickSararyButton)
+        public void Initialize(List<Employee> employees, Action<Employee> onClickSararyButton, Action<Employee> onClickRankUpButton)
         {
             view.Initialize();
 
             this.onClickSararyButton = onClickSararyButton;
+            this.onClickRankUpButton = onClickRankUpButton;
             CreateEmployeeButtons(employees);
 
             AddListeners();
@@ -47,10 +50,22 @@ namespace Noru.Employee
             CreateEmployeeButton(employee);
         }
 
-        public void SetLimitAdvanceText(string text)
+        public void ShowLevelUpResultPanel(bool isShow, Employee employee)
         {
-            view.SetLimitAdvanceTMP(text);
+            view.SetLevelUpResultPanel(DataManager.instance.LevelToKorean(employee.Level) + " " + DataManager.instance.RankToKorean(employee.Rank)
+                , employee.Character.Name, employee.Character.StandingSprite);
+            view.ShowLevelUpResultPanel(isShow);
+
+            SetSelectedEmployeePanel(employee);
         }
+        public void ShowRankUpResultPanel(bool isShow, Employee employee)
+        {
+            view.SetLevelUpResultPanel(DataManager.instance.RankToKorean(employee.Rank).ToString(), employee.Character.Name, employee.Character.StandingSprite);
+            view.ShowRankUpResultPanel(isShow);
+
+            SetSelectedEmployeePanel(employee);
+        }
+        public void ShowFailPanel(bool isShow) => view.ShowFailPanel(isShow);
 
         #endregion
 
@@ -63,19 +78,16 @@ namespace Noru.Employee
 
         private void AddSelectedEmployeePanelListeners(Employee employee)
         {
-            view.SalaryButton.onClick.AddListener(() => view.ShowSalaryPaymentPanel(true));
+            view.SalaryButton.onClick.AddListener(() => onClickSararyButton(employee));
+            view.RankUpButton.onClick.AddListener(() => onClickRankUpButton(employee));
             view.SelectedEmployeePanelBackButton.onClick.AddListener(() =>
             {
                 RemoveSelectedEmployeePanelListeners();
                 view.ShowSelectedEmployeePanel(false);
             });
 
-            int mul = 10;
-            foreach(Button button in view.PaymentButtons)
-            {
-                button.onClick.AddListener(() => onClickSararyButton(employee, mul));
-                mul *= 10;
-            }
+            view.LevelUpResultPanelButton.onClick.AddListener(() => view.ShowLevelUpResultPanel(false));
+            view.RankUpResultPanelButton.onClick.AddListener(() => view.ShowRankUpResultPanel(false));
         }
 
         private void RemoveSelectedEmployeePanelListeners()
@@ -106,10 +118,35 @@ namespace Noru.Employee
 
         private void SetSelectedEmployeePanel(Employee employee)
         {
-            // EXP 부분은 따로 남은 EXP를 구하는 수식을 만들 예정.
-            // 직원 성장 기능을 추가할 때 변경하겠음.
-            view.SetSelectedEmployeePanel(view.StarSprites[(int)employee.Character.Grade], employee.Character.ProfileSprite, employee.Rank.ToString(), employee.Character.Name
-                , ((int)employee.Limit).ToString(), (employee.EXP).ToString(), employee.Character.Description);
+            view.SetSelectedEmployeePanel(view.StarSprites[(int)employee.Character.Grade], employee.Character.ProfileSprite
+                , DataManager.instance.LevelToKorean(employee.Level) + " " + DataManager.instance.RankToKorean(employee.Rank)
+                , employee.Character.Name, ((int)employee.Limit).ToString(), employee.Character.Description
+                , DataManager.instance.FindEXP(employee.Character.Grade, employee.Rank, employee.Level)
+                );
+
+            view.RankUpButton.gameObject.SetActive(false);
+            view.SalaryButton.gameObject.SetActive(true);
+
+            if (employee.Level == Level.master)
+            {
+                view.SalaryButton.gameObject.SetActive(false);
+                switch (employee.Character.Grade)
+                {
+                    case Grade.star1:
+                    case Grade.star2:
+                        break;
+                    case Grade.star3:
+                        if(employee.Rank == Rank.employee)
+                            view.RankUpButton.gameObject.SetActive(true);
+                        break;
+                    case Grade.star4:
+                    case Grade.star5:
+                    case Grade.star6:
+                        if (employee.Rank == Rank.employee || employee.Rank == Rank.manager)
+                            view.RankUpButton.gameObject.SetActive(true);
+                        break;
+                }
+            }
         }
         #endregion
     }

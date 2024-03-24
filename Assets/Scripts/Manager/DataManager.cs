@@ -85,6 +85,43 @@ namespace manager
             return CharacterList.Find(o => o.ID == id);
         }
 
+        public string RankToKorean(Rank rank)
+        {
+            switch (rank) 
+            {
+                case Rank.employee:
+                    return "직원";
+                case Rank.manager:
+                    return "매니저";
+                case Rank.owner:
+                    return "점장";
+                default:
+                    return "정체불명";
+            }
+        }
+
+        public string LevelToKorean(Level level)
+        {
+            switch (level)
+            {
+                case Level.newcomer:
+                    return "신입";
+                case Level.beginner:
+                    return "초보";
+                case Level.faithful:
+                    return "성실한";
+                case Level.expert:
+                    return "숙련된";
+                case Level.excellent:
+                    return "우수한";
+                case Level.elite:
+                    return "엘리트";
+                case Level.master:
+                    return "마스터";
+                default:
+                    return "정체불명";
+            }
+        }
         #endregion
     }
 }

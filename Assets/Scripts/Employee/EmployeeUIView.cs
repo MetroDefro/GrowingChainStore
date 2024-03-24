@@ -10,8 +10,11 @@ namespace Noru.Employee
         public Button BackButton => backButton;
         public RectTransform EmployeeListParent => employeeListParent;
         public Button SalaryButton => salaryButton;
+        public Button RankUpButton => rankUpButton;
         public Button SelectedEmployeePanelBackButton => selectedEmployeePanelBackButton;
-        public Button[] PaymentButtons => paymentButtons;
+        public Button FailPanelSummitButton => failPanelSummitButton;
+        public Button LevelUpResultPanelButton => levelUpResultPanel.GetComponent<Button>();
+        public Button RankUpResultPanelButton => rankUpResultPanel.GetComponent<Button>();
 
         public Sprite[] StarSprites => starSprites;
 
@@ -39,11 +42,18 @@ namespace Noru.Employee
         [SerializeField] private TextMeshProUGUI descriptionTMP;
         [SerializeField] private RectTransform expGauge;
         [SerializeField] private Button salaryButton;
+        [SerializeField] private Button rankUpButton;
         [SerializeField] private Button selectedEmployeePanelBackButton;
 
-        [Header("SelectedEmployeePanel-SalaryPaymentPanel")]
-        [SerializeField] private RectTransform salaryPaymentPanel;
-        [SerializeField] private Button[] paymentButtons;
+        [Header("ResultPanel")]
+        [SerializeField] private RectTransform levelUpResultPanel;
+        [SerializeField] private RectTransform rankUpResultPanel;
+        [SerializeField] private RectTransform failPanel;
+        [SerializeField] private TextMeshProUGUI levelUpResultContentTMP;
+        [SerializeField] private Image levelUpResultstandingImage;
+        [SerializeField] private TextMeshProUGUI rankUpResultContentTMP;
+        [SerializeField] private Image rankUpResultstandingImage;
+        [SerializeField] private Button failPanelSummitButton;
 
         [Header("Others")]
         [SerializeField] private Sprite[] starSprites;
@@ -55,35 +65,49 @@ namespace Noru.Employee
         {
             ShowEmployeeUI(true);
             ShowSelectedEmployeePanel(false);
+            ShowLevelUpResultPanel(false);
+            ShowRankUpResultPanel(false);
+            ShowFailPanel(false);
+
         }
 
         public void ShowEmployeeUI(bool isShow) => gameObject.SetActive(isShow);
 
         public void ShowSelectedEmployeePanel(bool isShow) => selectedEmployeePanel.gameObject.SetActive(isShow);
-        public void ShowSalaryPaymentPanel(bool isShow) => salaryPaymentPanel.gameObject.SetActive(isShow);
+        public void ShowLevelUpResultPanel(bool isShow) => levelUpResultPanel.gameObject.SetActive(isShow);
+        public void ShowRankUpResultPanel(bool isShow) => rankUpResultPanel.gameObject.SetActive(isShow);
+        public void ShowFailPanel(bool isShow) => failPanel.gameObject.SetActive(isShow);
 
         public void SetSelectedEmployeePanel(Sprite starSprite, Sprite profileSprite, string titleText
-            , string nameText, string limitAdvanceText, string nextEXPText, string descriptionText)
+            , string nameText, string limitAdvanceText, string descriptionText, int maxEXP)
         {
             starImage.sprite = starSprite;
             profileImage.sprite = profileSprite;
-
             titleTMP.text = titleText;
             nameTMP.text = nameText;
             limitAdvanceTMP.text = limitAdvanceText;
-            nextEXPTMP.text = nextEXPText;
+            nextEXPTMP.text = maxEXP.ToString();
             descriptionTMP.text = descriptionText;
+        }
+
+        public void SetLevelUpResultPanel(string title, string name, Sprite standingSprite)
+        {
+            levelUpResultContentTMP.text = $"{name}은/는\n{title}로\n레벨 업 했다!";
+            levelUpResultstandingImage.sprite = standingSprite;
+        }
+        public void SetRankUpResultPanel(string title, string name, Sprite standingSprite)
+        {
+            rankUpResultContentTMP.text = $"{name}은/는\n{title}로\n레벨 업 했다!";
+            rankUpResultstandingImage.sprite = standingSprite;
         }
 
         public void SetStarImage(Sprite sprite) => starImage.sprite = sprite;
         public void SetProfileImage(Sprite sprite) => profileImage.sprite = sprite;
-
         public void SetTitleTMP(string text) => titleTMP.text = text;
         public void SetNameTMP(string text) => nameTMP.text = text;
         public void SetLimitAdvanceTMP(string text) => limitAdvanceTMP.text = text;
-        public void SetNextEXPTMP(string text) => nextEXPTMP.text = text;
+        public void SetNextEXPTMP(int curEXP, int maxEXP) => nextEXPTMP.text = (maxEXP - curEXP).ToString();
         public void SetDescriptionTMP(string text) => descriptionTMP.text = text;
-
         #endregion
     }
 

@@ -31,7 +31,7 @@ namespace Noru.Employee
         {
             employees = new List<Employee>();
             CreateEmployeesForTest();
-            uIPresenter.Initialize(employees, (Employee employee, int exp) => Grow(employee, exp));
+            uIPresenter.Initialize(employees, (Employee employee) => LevelUp(employee), (Employee employee) => RankUp(employee));
         }
 
         #endregion
@@ -45,16 +45,38 @@ namespace Noru.Employee
             }
         }
 
-        private void Grow(Employee employee, int exp)
+        private void LevelUp(Employee employee)
         {
-            // 해당 랭크 최대에 도달하면 exp를 더 투자할 수 없게끔 합시다.
-            
-            // while()
+            int needExp = DataManager.instance.FindEXP(employee.Character.Grade, employee.Rank, employee.Level);
+
+            if(PropertyManager.instance.Property.Money >= needExp)
+            {
+                PropertyManager.instance.Property.Money -= needExp;
+                employee.SetLevel(employee.Level + 1);
+                uIPresenter.ShowLevelUpResultPanel(true, employee);
+
+            }
+            else
+            {
+                uIPresenter.ShowFailPanel(true);
+            }
         }
 
         private void RankUp(Employee employee)
         {
+            int needExp = DataManager.instance.FindEXP(employee.Character.Grade, employee.Rank, employee.Level);
 
+            if (PropertyManager.instance.Property.Money >= needExp)
+            {
+                PropertyManager.instance.Property.Money -= needExp;
+                employee.SetRank(employee.Rank + 1);
+                uIPresenter.ShowRankUpResultPanel(true, employee);
+
+            }
+            else
+            {
+                uIPresenter.ShowFailPanel(true);
+            }
         }
 
         private void LimitAdvance(Employee employee)
