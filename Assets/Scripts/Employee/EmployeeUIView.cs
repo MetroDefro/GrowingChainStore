@@ -7,8 +7,6 @@ namespace Noru.Employee
     public class EmployeeUIView : MonoBehaviour
     {
         #region Property
-        public Button BackButton => backButton;
-        public RectTransform EmployeeListParent => employeeListParent;
         public Button SalaryButton => salaryButton;
         public Button RankUpButton => rankUpButton;
         public Button SelectedEmployeePanelBackButton => selectedEmployeePanelBackButton;
@@ -16,21 +14,11 @@ namespace Noru.Employee
         public Button LevelUpResultPanelButton => levelUpResultPanel.GetComponent<Button>();
         public Button RankUpResultPanelButton => rankUpResultPanel.GetComponent<Button>();
 
-        public Sprite[] StarSprites => starSprites;
-
         #endregion
 
         #region Variable
-        [Header("Panels")]
-        [SerializeField] private RectTransform topPnael;
-        [SerializeField] private RectTransform middlePanel;
+        [Header("Panel")]
         [SerializeField] private RectTransform selectedEmployeePanel;
-
-        [Header("TopPanel")]
-        [SerializeField] private Button backButton;
-
-        [Header("MiddlePanel")]
-        [SerializeField] private RectTransform employeeListParent;
 
         [Header("SelectedEmployeePanel")]
         [SerializeField] private Image starImage;
@@ -40,7 +28,6 @@ namespace Noru.Employee
         [SerializeField] private TextMeshProUGUI limitAdvanceTMP;
         [SerializeField] private TextMeshProUGUI nextEXPTMP;
         [SerializeField] private TextMeshProUGUI descriptionTMP;
-        [SerializeField] private RectTransform expGauge;
         [SerializeField] private Button salaryButton;
         [SerializeField] private Button rankUpButton;
         [SerializeField] private Button selectedEmployeePanelBackButton;
@@ -54,9 +41,6 @@ namespace Noru.Employee
         [SerializeField] private TextMeshProUGUI rankUpResultContentTMP;
         [SerializeField] private Image rankUpResultstandingImage;
         [SerializeField] private Button failPanelSummitButton;
-
-        [Header("Others")]
-        [SerializeField] private Sprite[] starSprites;
 
         #endregion
 
@@ -97,7 +81,7 @@ namespace Noru.Employee
         }
         public void SetRankUpResultPanel(string title, string name, Sprite standingSprite)
         {
-            rankUpResultContentTMP.text = $"{name}은/는\n{title}로\n레벨 업 했다!";
+            rankUpResultContentTMP.text = $"{name}은/는\n{title}로\n랭크 업 했다!";
             rankUpResultstandingImage.sprite = standingSprite;
         }
 

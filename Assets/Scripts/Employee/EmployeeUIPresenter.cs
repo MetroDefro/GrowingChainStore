@@ -11,8 +11,7 @@ namespace Noru.Employee
     {
         #region Variable
         private EmployeeUIView view;
-
-        [SerializeField] private EmployeeButton employeeButton;
+        private EmployeeListUIPresenter employeeListUI;
 
         private Action<Employee> onClickSararyButton;
         private Action<Employee> onClickRankUpButton;
@@ -21,35 +20,34 @@ namespace Noru.Employee
         #endregion
 
         #region Life Cycle
-        private void Awake()
-        {
-            view = GetComponent<EmployeeUIView>();
-        }
 
+        private void Dispose()
+        {
+            foreach (var employeeButton in employeeButtons) 
+            {
+                Destroy(employeeButton.gameObject);
+            }
+            employeeButtons.Clear();
+        }
         #endregion
 
         #region public Method
-        public void Initialize(List<Employee> employees, Action<Employee> onClickSararyButton, Action<Employee> onClickRankUpButton)
+        public void Initialize(EmployeeListUIPresenter employeeListUI, Action<Employee> onClickSararyButton, Action<Employee> onClickRankUpButton)
         {
-            view.Initialize();
-
+            view = GetComponent<EmployeeUIView>();
             this.onClickSararyButton = onClickSararyButton;
             this.onClickRankUpButton = onClickRankUpButton;
-            CreateEmployeeButtons(employees);
 
-            AddListeners();
+            this.employeeListUI = employeeListUI;
+            employeeListUI.SetEmployeeListUI((Employee employee) =>
+            {
+                SetSelectedEmployeePanel(employee);
+                AddSelectedEmployeePanelListeners(employee);
+                view.ShowSelectedEmployeePanel(true);
+            }).Show();
+
+            view.Initialize();
         }
-
-        public void ResetEmployeeButtons(List<Employee> employees)
-        {
-            CreateEmployeeButtons(employees);
-        }
-
-        public void AddEmployeeButton(Employee employee)
-        {
-            CreateEmployeeButton(employee);
-        }
-
         public void ShowLevelUpResultPanel(bool isShow, Employee employee)
         {
             view.SetLevelUpResultPanel(DataManager.instance.LevelToKorean(employee.Level) + " " + DataManager.instance.RankToKorean(employee.Rank)
@@ -60,7 +58,7 @@ namespace Noru.Employee
         }
         public void ShowRankUpResultPanel(bool isShow, Employee employee)
         {
-            view.SetLevelUpResultPanel(DataManager.instance.RankToKorean(employee.Rank).ToString(), employee.Character.Name, employee.Character.StandingSprite);
+            view.SetRankUpResultPanel(DataManager.instance.RankToKorean(employee.Rank).ToString(), employee.Character.Name, employee.Character.StandingSprite);
             view.ShowRankUpResultPanel(isShow);
 
             SetSelectedEmployeePanel(employee);
@@ -70,12 +68,6 @@ namespace Noru.Employee
         #endregion
 
         #region private Method
-        
-        private void AddListeners()
-        {
-            view.BackButton.onClick.AddListener(() => view.ShowEmployeeUI(false));
-        }
-
         private void AddSelectedEmployeePanelListeners(Employee employee)
         {
             view.SalaryButton.onClick.AddListener(() => onClickSararyButton(employee));
@@ -88,6 +80,7 @@ namespace Noru.Employee
 
             view.LevelUpResultPanelButton.onClick.AddListener(() => view.ShowLevelUpResultPanel(false));
             view.RankUpResultPanelButton.onClick.AddListener(() => view.ShowRankUpResultPanel(false));
+            view.FailPanelSummitButton.onClick.AddListener(() => view.ShowFailPanel(false));
         }
 
         private void RemoveSelectedEmployeePanelListeners()
@@ -96,29 +89,9 @@ namespace Noru.Employee
             view.SelectedEmployeePanelBackButton.onClick.RemoveAllListeners();
         }
 
-        private void CreateEmployeeButtons(List<Employee> employees)
-        {
-            employeeButtons = new List<EmployeeButton>();
-            foreach (Employee employee in employees) 
-            {
-                CreateEmployeeButton(employee);
-            }
-        }
-
-        private void CreateEmployeeButton(Employee employee)
-        {
-            employeeButtons.Add(Instantiate(employeeButton, view.EmployeeListParent)
-                .SetEmployeeButton(employee, view.StarSprites[(int)employee.Character.Grade], (Employee employee) => 
-                {
-                    SetSelectedEmployeePanel(employee);
-                    AddSelectedEmployeePanelListeners(employee);
-                    view.ShowSelectedEmployeePanel(true);
-                }));
-        }
-
         private void SetSelectedEmployeePanel(Employee employee)
         {
-            view.SetSelectedEmployeePanel(view.StarSprites[(int)employee.Character.Grade], employee.Character.ProfileSprite
+            view.SetSelectedEmployeePanel(employeeListUI.StarSprites[(int)employee.Character.Grade], employee.Character.ProfileSprite
                 , DataManager.instance.LevelToKorean(employee.Level) + " " + DataManager.instance.RankToKorean(employee.Rank)
                 , employee.Character.Name, ((int)employee.Limit).ToString(), employee.Character.Description
                 , DataManager.instance.FindEXP(employee.Character.Grade, employee.Rank, employee.Level)

@@ -14,6 +14,7 @@ namespace manager
         public List<EXP> EXPList;
         public List<InCome> InComeList;
         public List<Character> CharacterList;
+        public List<RankUpMoney> RankUpMoneyList;
         #endregion
 
         #region Life Cycle
@@ -35,6 +36,7 @@ namespace manager
             EXPList = csvparser.ParseEXPTable(csvparser.CSVReader(Application.streamingAssetsPath + @"\exp_table.csv"));
             InComeList = csvparser.ParseInComeTable(csvparser.CSVReader(Application.streamingAssetsPath + @"\income_table.csv"));
             CharacterList = csvparser.ParseCharacterTable(csvparser.CSVReader(Application.streamingAssetsPath + @"\character_table.csv"));
+            RankUpMoneyList = csvparser.ParseRankUpMoneyTable(csvparser.CSVReader(Application.streamingAssetsPath + @"\rankup_money_table.csv"));
         }
 
         public int FindEXP(Grade grade, Rank rank, Level level)
@@ -78,6 +80,10 @@ namespace manager
                 default:
                     return 0;
             }
+        }
+        public int FindRankUpMoney(Grade grade, Rank rank)
+        {
+            return RankUpMoneyList.Find(o => o.Grade == grade && o.Rank == rank).Money;
         }
 
         public Character FindCharacter(int id) 

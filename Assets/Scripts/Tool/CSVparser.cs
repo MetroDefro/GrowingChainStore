@@ -79,6 +79,22 @@ public class CSVparser
 
         return result;
     }
+    public List<RankUpMoney> ParseRankUpMoneyTable(DataTable table)
+    {
+        List<RankUpMoney> result = new List<RankUpMoney>();
+
+        foreach (DataRow row in table.Rows)
+        {
+            Rank rank = (Rank)Enum.Parse(typeof(Rank), row["Rank"].ToString());
+            Grade grade = (Grade)Enum.Parse(typeof(Grade), row["Grade"].ToString());
+            int money = int.Parse(row["Money"].ToString());
+            
+            RankUpMoney rankupMoney = new RankUpMoney(rank, grade, money);
+            result.Add(rankupMoney);
+        }
+
+        return result;
+    }
 
     public List<Character> ParseCharacterTable(DataTable table)
     {

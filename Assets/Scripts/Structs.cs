@@ -48,6 +48,19 @@ public struct InCome
         this.Star6 = Star6;
     }
 }
+public struct RankUpMoney
+{
+    public Rank Rank;
+    public Grade Grade;
+    public int Money; 
+
+    public RankUpMoney(Rank Rank, Grade Grade, int Money)
+    {
+        this.Rank = Rank;
+        this.Grade = Grade;
+        this.Money = Money;
+    }
+}
 
 public struct Character
 {

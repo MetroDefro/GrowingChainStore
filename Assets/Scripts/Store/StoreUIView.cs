@@ -1,15 +1,38 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StoreUIView : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI orderCountTMP;
-    [SerializeField] private TextMeshProUGUI makingCountTMP;
-    [SerializeField] private TextMeshProUGUI moneyTMP;
+    #region Property
+    public Button[] SlotButtons => slotButtons;
+    public Button OpenArrangementButton => openArrangementButton;
+    public Button CloseArrangementButton => closeArrangementButton;
+    #endregion
 
-    public void SetOrderCountTMP(int count) => orderCountTMP.text = count.ToString();
+    #region Variable
+    [SerializeField] private RectTransform arrangementPanel;
+    [SerializeField] private Button[] slotButtons;
+    [SerializeField] private Button openArrangementButton;
+    [SerializeField] private Button closeArrangementButton;
+    [SerializeField] private Image[] employeeImages;
+    #endregion
 
-    public void SetMakingCountTMP(int count) => makingCountTMP.text = count.ToString();
+    #region Public Method
+    public void ShowArrangementPanel(bool isShow)
+    {
+        arrangementPanel.gameObject.SetActive(isShow);
+    }
 
-    public void SetMoneyTMP(int money) => moneyTMP.text = money.ToString();
+    public void SwitchButton(bool isOpen)
+    {
+        OpenArrangementButton.gameObject.SetActive(!isOpen);
+        closeArrangementButton.gameObject.SetActive(isOpen);
+    }
+
+    public void SetEmployeeSprite(int idx, Sprite sprite)
+    {
+        employeeImages[idx].sprite = sprite;
+    }
+    #endregion
 }

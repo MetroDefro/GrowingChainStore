@@ -6,6 +6,10 @@ namespace Noru.Employee
 {
     public class EmployeePresenter : MonoBehaviour
     {
+        #region Property
+        public List<Employee> Employees => employees;
+        #endregion
+
         #region Variable
         private List<Employee> employees;
         [SerializeField] private EmployeeUIPresenter uIPresenter;
@@ -27,23 +31,15 @@ namespace Noru.Employee
         #endregion
 
         #region Public Method
-        public void Initialize()
+        public void Initialize(List<Employee> employees, EmployeeListUIPresenter employeeListUI)
         {
-            employees = new List<Employee>();
-            CreateEmployeesForTest();
-            uIPresenter.Initialize(employees, (Employee employee) => LevelUp(employee), (Employee employee) => RankUp(employee));
+            this.employees = employees;
+            uIPresenter.Initialize(employeeListUI, (Employee employee) => LevelUp(employee), (Employee employee) => RankUp(employee));
         }
 
         #endregion
 
         #region private Method
-        private void CreateEmployeesForTest()
-        {
-            foreach (Character character in DataManager.instance.CharacterList)
-            {
-                employees.Add(new Employee(character));
-            }
-        }
 
         private void LevelUp(Employee employee)
         {
@@ -54,7 +50,6 @@ namespace Noru.Employee
                 PropertyManager.instance.Property.Money -= needExp;
                 employee.SetLevel(employee.Level + 1);
                 uIPresenter.ShowLevelUpResultPanel(true, employee);
-
             }
             else
             {
@@ -64,14 +59,14 @@ namespace Noru.Employee
 
         private void RankUp(Employee employee)
         {
-            int needExp = DataManager.instance.FindEXP(employee.Character.Grade, employee.Rank, employee.Level);
+            int needMoney = DataManager.instance.FindRankUpMoney(employee.Character.Grade, employee.Rank);
 
-            if (PropertyManager.instance.Property.Money >= needExp)
+            if (PropertyManager.instance.Property.Money >= needMoney)
             {
-                PropertyManager.instance.Property.Money -= needExp;
+                PropertyManager.instance.Property.Money -= needMoney;
                 employee.SetRank(employee.Rank + 1);
+                employee.SetLevel(Level.newcomer);
                 uIPresenter.ShowRankUpResultPanel(true, employee);
-
             }
             else
             {

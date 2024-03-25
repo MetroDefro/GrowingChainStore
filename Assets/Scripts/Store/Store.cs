@@ -1,9 +1,17 @@
 using System.Collections.Generic;
-using System.Collections;
-using UnityEngine;
+using Noru.Employee;
 
-public class Store : MonoBehaviour
+public class Store
 {
+    #region Property
+    public int Size => size;
+    #endregion
+
+    #region Variable
+    private List<Employee> employees;
+    private int size;
+    #endregion
+
     public void Initialize()
     {
 
