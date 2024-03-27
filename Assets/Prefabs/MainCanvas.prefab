@@ -209,8 +209,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -600,8 +600,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1588,7 +1588,7 @@ GameObject:
   - component: {fileID: 4524724706303850799}
   - component: {fileID: 6188314492403543862}
   m_Layer: 5
-  m_Name: GlobalCanvas
+  m_Name: MainCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1610,9 +1610,9 @@ RectTransform:
   - {fileID: 7245510275930637875}
   - {fileID: 3666220291227102532}
   - {fileID: 6628202189452758282}
+  - {fileID: 4935133618649398320}
   - {fileID: 269756035804476040}
   - {fileID: 8598075477165282497}
-  - {fileID: 4935133618649398320}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1695,6 +1695,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 623d099b5a8b34647bfedb13f5cb41bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moneyTMP: {fileID: 8196964628665512166}
+  fameTMP: {fileID: 4397982712956974133}
+  employeeCanvasButton: {fileID: 1070722409724519446}
+  arrangementCanvasButton: {fileID: 6624442386525025355}
+  worldmapCanvasButton: {fileID: 2771373620480561372}
+  brandCanvasButton: {fileID: 2490572455807407334}
+  offerAppCanvasButton: {fileID: 229157940456681433}
 --- !u!114 &6188314492403543862
 MonoBehaviour:
   m_ObjectHideFlags: 0

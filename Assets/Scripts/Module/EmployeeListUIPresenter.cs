@@ -26,6 +26,8 @@ public class EmployeeListUIPresenter : MonoBehaviour
 
         this.onClick = null;
         AddListeners();
+
+        Hide();
     }
 
     public void Show()

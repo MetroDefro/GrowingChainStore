@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Noru.Employee
 {
-    public class EmployeeUIPresenter : MonoBehaviour
+    public class EmployeeUIPresenter : UIPresenterBase
     {
         #region Variable
         private EmployeeUIView view;
@@ -44,10 +44,24 @@ namespace Noru.Employee
                 SetSelectedEmployeePanel(employee);
                 AddSelectedEmployeePanelListeners(employee);
                 view.ShowSelectedEmployeePanel(true);
-            }).Show();
+            });
 
             view.Initialize();
+            Hide();
         }
+
+        override public void Show()
+        {
+            view.Show();
+            employeeListUI.Show();
+        }
+
+        override public void Hide()
+        {
+            view.Hide();
+            employeeListUI.Hide();
+        }
+
         public void ShowLevelUpResultPanel(bool isShow, Employee employee)
         {
             view.SetLevelUpResultPanel(DataManager.instance.LevelToKorean(employee.Level) + " " + DataManager.instance.RankToKorean(employee.Rank)

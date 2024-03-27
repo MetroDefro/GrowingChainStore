@@ -8,6 +8,9 @@ public class StorePresenter : MonoBehaviour
 {
     #region Variable
     [SerializeField] private StoreUIPresenter uIPresenter;
+    private List<Store> stores;
+
+    private Store store;
     #endregion
 
     #region Life Cycle
@@ -25,9 +28,31 @@ public class StorePresenter : MonoBehaviour
     #endregion
 
     #region Public Method
-    public void Initialize(EmployeeListUIPresenter employeeListUI)
+    public void Initialize(List<Store> stores, EmployeeListUIPresenter employeeListUI)
     {
-        uIPresenter.Initialize(employeeListUI);
+        this.stores = stores;
+        uIPresenter.Initialize(employeeListUI
+            , (int idx, Employee employee) => SetEmployee(idx, employee));
+
+        // test
+        store = new Store(StoreSize.size30);
+    }
+
+    public void CreateStore()
+    {
+
+    }
+
+    public void SetStore(Store store)
+    {
+
+    }
+
+    public void SetEmployee(int idx, Employee employee)
+    {
+        store.SetEmployee(idx, employee);
+
+        Debug.Log(store.Employees[idx].Character.Name);
     }
 
     #endregion

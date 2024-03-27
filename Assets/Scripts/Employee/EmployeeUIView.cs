@@ -47,7 +47,6 @@ namespace Noru.Employee
         #region public method
         public void Initialize()
         {
-            ShowEmployeeUI(true);
             ShowSelectedEmployeePanel(false);
             ShowLevelUpResultPanel(false);
             ShowRankUpResultPanel(false);
@@ -55,7 +54,8 @@ namespace Noru.Employee
 
         }
 
-        public void ShowEmployeeUI(bool isShow) => gameObject.SetActive(isShow);
+        public void Show() => gameObject.SetActive(true);
+        public void Hide() => gameObject.SetActive(false);
 
         public void ShowSelectedEmployeePanel(bool isShow) => selectedEmployeePanel.gameObject.SetActive(isShow);
         public void ShowLevelUpResultPanel(bool isShow) => levelUpResultPanel.gameObject.SetActive(isShow);

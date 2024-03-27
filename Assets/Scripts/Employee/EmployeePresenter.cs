@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Noru.Employee
 {
-    public class EmployeePresenter : MonoBehaviour
+    public class EmployeePresenter : PresenterBase
     {
         #region Property
         public List<Employee> Employees => employees;
@@ -12,7 +12,6 @@ namespace Noru.Employee
 
         #region Variable
         private List<Employee> employees;
-        [SerializeField] private EmployeeUIPresenter uIPresenter;
 
         #endregion
 
@@ -34,7 +33,8 @@ namespace Noru.Employee
         public void Initialize(List<Employee> employees, EmployeeListUIPresenter employeeListUI)
         {
             this.employees = employees;
-            uIPresenter.Initialize(employeeListUI, (Employee employee) => LevelUp(employee), (Employee employee) => RankUp(employee));
+            (uIPresenter as EmployeeUIPresenter)
+                .Initialize(employeeListUI, (Employee employee) => LevelUp(employee), (Employee employee) => RankUp(employee));
         }
 
         #endregion
@@ -49,11 +49,11 @@ namespace Noru.Employee
             {
                 PropertyManager.instance.Property.Money -= needExp;
                 employee.SetLevel(employee.Level + 1);
-                uIPresenter.ShowLevelUpResultPanel(true, employee);
+                (uIPresenter as EmployeeUIPresenter).ShowLevelUpResultPanel(true, employee);
             }
             else
             {
-                uIPresenter.ShowFailPanel(true);
+                (uIPresenter as EmployeeUIPresenter).ShowFailPanel(true);
             }
         }
 
@@ -66,11 +66,11 @@ namespace Noru.Employee
                 PropertyManager.instance.Property.Money -= needMoney;
                 employee.SetRank(employee.Rank + 1);
                 employee.SetLevel(Level.newcomer);
-                uIPresenter.ShowRankUpResultPanel(true, employee);
+                (uIPresenter as EmployeeUIPresenter).ShowRankUpResultPanel(true, employee);
             }
             else
             {
-                uIPresenter.ShowFailPanel(true);
+                (uIPresenter as EmployeeUIPresenter).ShowFailPanel(true);
             }
         }
 

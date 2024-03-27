@@ -4,16 +4,30 @@ using Noru.Employee;
 public class Store
 {
     #region Property
-    public int Size => size;
+    public Employee[] Employees => employees;
+    public StoreSize Size => size;
     #endregion
 
     #region Variable
-    private List<Employee> employees;
-    private int size;
+    private Employee[] employees;
+    private StoreSize size;
     #endregion
 
-    public void Initialize()
+    #region Public Method
+    public Store(StoreSize size)
     {
-
+        employees = new Employee[3];
+        this.size = size;
     }
+
+    public void SetEmployee(int idx, Employee employee)
+    {
+        employees[idx] = employee;
+    }
+
+    public void SetSize(StoreSize size)
+    {
+        this.size = size;
+    }
+    #endregion
 }

@@ -36,3 +36,12 @@ public enum Limit
     limit4,
     limit5,
 }
+
+public enum StoreSize
+{
+    size10,
+    size20,
+    size30,
+    size50,
+    size100
+}
